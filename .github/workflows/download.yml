@@ -34,13 +34,7 @@ jobs:
 
       - name: Export Docker image
         run: |
-          docker save -o "$image_file_name".tar "$image_name"
+          docker save -o image.tar "$image_name"
           ls -l
-          curl -F 'image=@"$image_file_name".tar' https://docker-image.auburn.today:10443/receive/image
-        
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: image.tar
-          path: ./*.tar
+          pwd
+          curl -F 'image=@image.tar' https://docker-image.auburn.today:10443/receive/image
