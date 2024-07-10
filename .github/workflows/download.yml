@@ -42,4 +42,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: $image_name
-          path: ./"$image_file_name".tar
+          path: "$image_file_name".tar
