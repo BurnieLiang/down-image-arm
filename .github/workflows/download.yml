@@ -27,7 +27,7 @@ jobs:
           
           echo "image_name=$image_name" >> $GITHUB_ENV
           echo "platform=$platform" >> $GITHUB_ENV
-          echo "image_file_name=$image_file_name" >> $GETHUB_ENV
+          echo "image_file_name=$image_file_name" >> $GITHUB_ENV
 
       - name: Pull Docker image
         run: docker pull --platform linux/"$platform" "$image_name"
