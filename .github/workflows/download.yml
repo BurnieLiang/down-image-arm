@@ -31,10 +31,12 @@ jobs:
 
       - name: Pull Docker image
         run: docker pull --platform linux/"$platform" "$image_name"
-
+        
       - name: Export Docker image
-        run: |
-          docker save -o image.tar "$image_name"
-          ls -l
-          pwd
-          curl -F 'image=@image.tar' https://docker-image.auburn.today:10443/receive/image
+        run: docker save -o image.tar "$image_name"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: image.tar
+          path: image.tar
