@@ -17,7 +17,7 @@ jobs:
           tag_name="${GITHUB_REF#refs/tags/}"
           image_name="${tag_name//--/:}"
           image_file_name="${tag_name//\//-}"
-          platform="amd64"
+          platform="arm64"
           
           regex="(.+)(-amd64|-arm64)$"
           if [[ $image_name =~ $regex ]]; then
@@ -30,7 +30,7 @@ jobs:
           echo "image_file_name=$image_file_name" >> $GITHUB_ENV
 
       - name: Pull Docker image
-        run: docker pull --platform linux/"$platform" "$image_name"
+        run: docker pull --platform linux/arm64 "$image_name"
         
       - name: Export Docker image
         run: docker save -o image.tar "$image_name"
