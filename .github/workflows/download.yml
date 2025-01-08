@@ -12,31 +12,17 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
 
-      - name: Get the image info
-        run: |
-          tag_name="${GITHUB_REF#refs/tags/}"
-          image_name="${tag_name//--/:}"
-          image_file_name="${tag_name//\//-}"
-          platform="arm64"
-          
-          regex="(.+)(-amd64|-arm64)$"
-          if [[ $image_name =~ $regex ]]; then
-            image_name="${BASH_REMATCH[1]}"
-            platform="${BASH_REMATCH[2]#-}"
-          fi
-          
-          echo "image_name=$image_name" >> $GITHUB_ENV
-          echo "platform=$platform" >> $GITHUB_ENV
-          echo "image_file_name=$image_file_name" >> $GITHUB_ENV
-
       - name: Pull Docker image
-        run: docker pull --platform linux/arm64 "$image_name"
+        run: docker pull openjdk@sha256:e03eabe25eb80440cae432dff86e47dfddecb5a9b4fdb633eceef755d274a5a0
         
+      - name: List Docker images
+        run: docker images
+
       - name: Export Docker image
-        run: docker save -o image.tar "$image_name"
+        run: docker save -o openjdk_arm.tar openjdk
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: image.tar
-          path: image.tar
+          name: openjdk_arm.tar
+          path: openjdk_arm.tar
